@@ -8,7 +8,7 @@ Created by [**Zandaa1**](https://github.com/Zandaa1).
 
 ## 🖼️ Preview
 
-![SubFlix Preview](assets/preview.jpg)
+![SubFlix Preview](assets/preview.png)
 
 ---
 
