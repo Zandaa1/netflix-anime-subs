@@ -3,7 +3,7 @@ const statusEl = document.getElementById('status');
 const offsetValueEl = document.getElementById('offsetValue');
 const toggleBtn = document.getElementById('toggleBtn');
 
-let currentOffset = 0;
+let currentOffset = 0.1;
 let subsHidden = false;
 
 function fmtOffset(v) {
@@ -11,10 +11,31 @@ function fmtOffset(v) {
   return `${sign}${v.toFixed(1)}s`;
 }
 
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, (m) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  }[m]));
+}
+
+function renderStatus(cueCount, filename) {
+  if (!filename || !cueCount) {
+    statusEl.innerHTML = '<span class="status-placeholder">No subtitle file loaded</span>';
+    statusEl.removeAttribute('title');
+    return;
+  }
+  const safeName = escapeHtml(filename);
+  statusEl.innerHTML = `<span class="badge">${cueCount} lines</span><span class="file-name" title="${safeName}">${safeName}</span>`;
+  statusEl.title = filename;
+}
+
 async function getActiveNetflixTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab || !tab.url || !tab.url.includes('netflix.com')) {
-    statusEl.textContent = 'Open a Netflix video tab first.';
+    statusEl.innerHTML = '<span class="status-error">Open a Netflix video tab first.</span>';
     return null;
   }
   return tab;
@@ -24,7 +45,7 @@ function sendToContent(message) {
   return getActiveNetflixTab().then((tab) => {
     if (!tab) return null;
     return chrome.tabs.sendMessage(tab.id, message).catch((err) => {
-      statusEl.textContent = 'Content script not ready — reload the Netflix tab.';
+      statusEl.innerHTML = '<span class="status-error">Reload the Netflix tab to activate.</span>';
       console.error(err);
       return null;
     });
@@ -64,7 +85,7 @@ function parseSRT(text) {
   return cues;
 }
 
-// Parses basic WebVTT (no styling/positioning)
+// Parses basic WebVTT
 function parseVTT(text) {
   const body = text.replace(/\r/g, '').replace(/^WEBVTT.*\n/, '');
   const blocks = body.split(/\n\n+/);
@@ -92,7 +113,7 @@ function parseVTT(text) {
 
 function parseSubtitleFile(filename, text) {
   if (filename.toLowerCase().endsWith('.vtt')) return parseVTT(text);
-  return parseSRT(text); // default to srt
+  return parseSRT(text);
 }
 
 // ---- Event wiring ----
@@ -101,19 +122,21 @@ fileInput.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
-  statusEl.textContent = `Parsing ${file.name}...`;
+  statusEl.innerHTML = `<span class="status-placeholder">Parsing ${escapeHtml(file.name)}...</span>`;
   const text = await file.text();
   const cues = parseSubtitleFile(file.name, text);
 
   if (cues.length === 0) {
-    statusEl.textContent = `Couldn't find any cues in ${file.name}. Check the file format.`;
+    statusEl.innerHTML = `<span class="status-error">No cues found in ${escapeHtml(file.name)}.</span>`;
     return;
   }
 
+  // Load subtitles and apply the default 0.1s offset immediately
   const result = await sendToContent({ type: 'LOAD_SUBS', cues, filename: file.name });
   if (result && result.ok) {
-    statusEl.textContent = `Loaded ${cues.length} lines from ${file.name}.`;
-    currentOffset = 0;
+    currentOffset = 0.1;
+    await sendToContent({ type: 'SET_OFFSET', offset: currentOffset });
+    renderStatus(cues.length, file.name);
     offsetValueEl.textContent = fmtOffset(currentOffset);
   }
 });
@@ -129,20 +152,27 @@ document.querySelectorAll('.offset-buttons button').forEach((btn) => {
 
 toggleBtn.addEventListener('click', async () => {
   subsHidden = !subsHidden;
-  toggleBtn.textContent = subsHidden ? 'Show subtitles' : 'Hide subtitles';
+  toggleBtn.innerHTML = subsHidden
+    ? '<span>👁️</span> Show Subtitles'
+    : '<span>🙈</span> Hide Subtitles';
+  toggleBtn.classList.toggle('is-hidden', subsHidden);
   await sendToContent({ type: 'SET_VISIBILITY', hidden: subsHidden });
 });
 
-// On popup open, ask content script for current state so UI reflects reality
+// On popup open, restore state or set default offset to 0.1s
 (async () => {
+  offsetValueEl.textContent = fmtOffset(currentOffset);
   const state = await sendToContent({ type: 'GET_STATE' });
   if (state) {
-    currentOffset = state.offset || 0;
+    currentOffset = typeof state.offset === 'number' ? state.offset : 0.1;
     subsHidden = !!state.hidden;
     offsetValueEl.textContent = fmtOffset(currentOffset);
-    toggleBtn.textContent = subsHidden ? 'Show subtitles' : 'Hide subtitles';
+    toggleBtn.innerHTML = subsHidden
+      ? '<span>👁️</span> Show Subtitles'
+      : '<span>🙈</span> Hide Subtitles';
+    toggleBtn.classList.toggle('is-hidden', subsHidden);
     if (state.cueCount) {
-      statusEl.textContent = `${state.cueCount} lines loaded (${state.filename || 'unknown file'}).`;
+      renderStatus(state.cueCount, state.filename);
     }
   }
 })();

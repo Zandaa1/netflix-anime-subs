@@ -1,7 +1,7 @@
 (() => {
   const state = {
     cues: [],
-    offset: 1,
+    offset: 0.1,
     hidden: false,
     filename: null,
     videoEl: null,

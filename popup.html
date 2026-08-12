@@ -1,90 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SubFlix</title>
   <style>
+    :root {
+      --bg-color: #141414;
+      --card-bg: #1f1f1f;
+      --card-border: #2e2e2e;
+      --text-main: #ffffff;
+      --text-muted: #a3a3a3;
+      --accent-red: #e50914;
+      --accent-red-hover: #f6121d;
+      --btn-bg: #2a2a2a;
+      --btn-hover: #383838;
+      --border-radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      width: 260px;
-      font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-      padding: 12px;
-      background: #141414;
-      color: #eee;
+      width: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 14px;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      user-select: none;
     }
-    h1 {
-      font-size: 14px;
-      margin: 0 0 10px;
-      color: #fff;
-    }
-    input[type="file"] {
-      width: 100%;
-      font-size: 12px;
-      margin-bottom: 10px;
-      color: #ccc;
-    }
-    #status {
-      font-size: 12px;
-      color: #9a9a9a;
-      margin-bottom: 12px;
-      min-height: 16px;
-    }
-    .offset-row {
+
+    .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--card-border);
     }
-    .offset-row span {
-      font-size: 12px;
-      color: #ccc;
+
+    .logo-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .offset-buttons button {
-      background: #2a2a2a;
+
+    .logo-badge {
+      font-size: 10px;
+      font-weight: 600;
+      background: var(--accent-red);
       color: #fff;
-      border: 1px solid #3a3a3a;
+      padding: 2px 6px;
       border-radius: 4px;
-      padding: 4px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .file-input-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 9px 12px;
+      background: #242424;
+      border: 1px dashed #404040;
+      border-radius: var(--border-radius);
+      color: #e0e0e0;
       font-size: 12px;
+      font-weight: 500;
       cursor: pointer;
-      margin-left: 4px;
+      transition: all 0.2s ease;
     }
-    .offset-buttons button:hover {
-      background: #3a3a3a;
+
+    .file-input-label:hover {
+      background: #2c2c2c;
+      border-color: var(--accent-red);
+      color: #fff;
     }
-    #offsetValue {
+
+    #fileInput {
+      display: none;
+    }
+
+    .status-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--border-radius);
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      min-height: 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #status {
+      font-size: 12px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .status-placeholder {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .status-error {
+      color: #ff6b6b;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      background: rgba(229, 9, 20, 0.15);
+      color: #ff4d4d;
+      border: 1px solid rgba(229, 9, 20, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .file-name {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 3px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .offset-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-red);
       font-variant-numeric: tabular-nums;
+      background: rgba(229, 9, 20, 0.1);
+      padding: 1px 6px;
+      border-radius: 4px;
     }
+
+    .offset-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .offset-buttons button {
+      background: var(--btn-bg);
+      color: #fff;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 7px 0;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .offset-buttons button:hover {
+      background: var(--btn-hover);
+      border-color: #555;
+      transform: translateY(-1px);
+    }
+
+    .offset-buttons button:active {
+      transform: translateY(0);
+    }
+
     #toggleBtn {
       width: 100%;
-      background: #e50914;
+      background: var(--accent-red);
       color: #fff;
       border: none;
-      border-radius: 4px;
-      padding: 8px;
+      border-radius: var(--border-radius);
+      padding: 9px;
       font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s ease, transform 0.1s ease;
     }
+
     #toggleBtn:hover {
-      background: #f6121d;
+      background: var(--accent-red-hover);
+    }
+
+    #toggleBtn.is-hidden {
+      background: #3a3a3a;
+      color: #ccc;
+    }
+
+    #toggleBtn.is-hidden:hover {
+      background: #4a4a4a;
+      color: #fff;
     }
   </style>
 </head>
 <body>
-  <h1>🍿 SubFlix</h1>
-  <input type="file" id="fileInput" accept=".srt,.vtt" />
-  <div id="status">No subtitle file loaded.</div>
+  <div class="header">
+    <div class="logo-title">
+      <span>🍿 SubFlix</span>
+    </div>
+    <span class="logo-badge">v0.1</span>
+  </div>
 
-  <div class="offset-row">
-    <span>Offset: <span id="offsetValue">0.0s</span></span>
-    <div class="offset-buttons">
-      <button data-delta="-1">-1s</button>
-      <button data-delta="-0.1">-0.1</button>
-      <button data-delta="0.1">+0.1</button>
-      <button data-delta="1">+1s</button>
+  <div class="file-input-wrapper">
+    <label for="fileInput" class="file-input-label">
+      <span>📁 Select Subtitle File (.srt, .vtt)</span>
+    </label>
+    <input type="file" id="fileInput" accept=".srt,.vtt" />
+  </div>
+
+  <div class="status-card">
+    <div id="status">
+      <span class="status-placeholder">No subtitle file loaded</span>
     </div>
   </div>
 
-  <button id="toggleBtn">Hide subtitles</button>
+  <div class="section-title">
+    <span>Sync Offset</span>
+    <span id="offsetValue" class="offset-badge">+0.1s</span>
+  </div>
+
+  <div class="offset-buttons">
+    <button data-delta="-1">-1s</button>
+    <button data-delta="-0.1">-0.1s</button>
+    <button data-delta="0.1">+0.1s</button>
+    <button data-delta="1">+1s</button>
+  </div>
+
+  <button id="toggleBtn">
+    <span>🙈</span> Hide Subtitles
+  </button>
 
   <script src="popup.js"></script>
 </body>
