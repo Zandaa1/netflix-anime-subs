@@ -1,70 +1,78 @@
-# 🎬 Netflix Custom Subs
+# 🍿 SubFlix — Custom Subtitles for Netflix
 
-A lightweight Chrome extension (Manifest V3) that lets you load external subtitle files (`.srt` or `.vtt`) and display them on top of Netflix video playback, with real-time manual sync offset controls to fix audio/subtitle drift.
+A lightweight, high-performance browser extension (Manifest V3) that enables custom subtitle overlays (`.srt` or `.vtt`) on Netflix video playback with sub-second real-time sync offset controls.
 
 Created by [**Zandaa1**](https://github.com/Zandaa1).
 
 ---
 
-## ✨ Features
+## 🖼️ Preview
 
-- **Custom Subtitle Files**: Load `.srt` or `.vtt` files directly into Netflix player.
-- **Real-Time Offset Sync**: Adjust subtitle timing on the fly (`-1s`, `-0.1s`, `+0.1s`, `+1s`) to match video audio perfectly.
-- **Seamless Netflix Integration**: Subtitles scale dynamically and re-position cleanly across fullscreen toggles and video resizes.
-- **Hide / Show Toggle**: Quickly toggle subtitle overlay visibility without losing loaded file data.
-- **Privacy First**: 100% client-side operation with zero tracking, data collection, or external network calls.
+![SubFlix Preview](assets/preview.jpg)
 
 ---
 
-## 🚀 Installation Instructions
+## ✨ Features
 
-Since this is an unpacked extension, follow these steps to load it into Chrome, Brave, Edge, or any Chromium browser:
+- **Custom Subtitle Files**: Seamlessly parse and load `.srt` and `.vtt` subtitle files directly into Netflix player.
+- **Real-Time Offset Sync**: Adjust subtitle timing on the fly (`-1s`, `-0.1s`, `+0.1s`, `+1s`) to eliminate audio/subtitle sync drift.
+- **Dynamic Layout Alignment**: Overlay automatically scales, centers, and anchors across fullscreen toggles and window resizes.
+- **Visibility Toggle**: Easily toggle subtitle overlay visibility (Show/Hide) without clearing loaded subtitle data.
+- **100% Private & Local**: Zero data collection, no external API dependencies, and 100% client-side execution.
 
-1. Download or clone this repository to your local folder.
-2. Open your Chromium-based browser and navigate to the Extensions management page:
+---
+
+## 🚀 Installation Guide
+
+SubFlix can be installed in Chrome, Brave, Edge, or any Chromium-based browser:
+
+1. Download or clone this repository:
+   ```bash
+   git clone https://github.com/Zandaa1/netflix-anime-subs.git
+   ```
+2. Open your browser's extensions page:
    - **Chrome**: `chrome://extensions`
    - **Brave**: `brave://extensions`
    - **Edge**: `edge://extensions`
-3. Enable **Developer mode** (toggle switch in the top-right corner).
-4. Click the **Load unpacked** button in the top-left area.
-5. Select the `netflix-anime-subs` folder.
-6. Pin the extension icon to your browser toolbar for quick access.
+3. Enable **Developer mode** (toggle in the top-right corner).
+4. Click **Load unpacked** in the top-left menu.
+5. Select the repository folder (`netflix-anime-subs`).
+6. Pin **SubFlix** to your browser toolbar for easy access!
 
 ---
 
-## 📖 How to Load & Use Subtitle Files
+## 📖 How to Load & Sync Subtitles
 
-1. **Open Netflix**: Navigate to [Netflix](https://www.netflix.com) and start playing your desired anime, movie, or show.
-2. **Open Extension Popup**: Click the **Netflix Custom Subs** icon in your browser toolbar while on the active Netflix video tab.
+1. **Start Playback**: Open [Netflix](https://www.netflix.com) and start playing your video.
+2. **Open SubFlix**: Click the **SubFlix** extension icon in your browser toolbar.
 3. **Load Subtitle File**:
-   - Click the **Choose File** / file input button.
-   - Select your `.srt` or `.vtt` file from your device.
-   - The status text will update to confirm how many subtitle lines were loaded.
-4. **Enjoy Playback**: Subtitles will appear rendered over the bottom-center of the video player.
-5. **Adjust Sync (If Subtitles are Off-Sync)**:
-   - Use the **`-1s` / `-0.1s`** buttons if subtitles appear **too late** (shifts subtitles earlier).
-   - Use the **`+0.1s` / `+1s`** buttons if subtitles appear **too early** (shifts subtitles later).
-6. **Toggle Subtitles**: Click **Hide subtitles** to temporarily hide the overlay, or **Show subtitles** to turn it back on.
+   - Click **Choose File** and pick your `.srt` or `.vtt` file.
+   - SubFlix will parse the file and confirm the number of loaded subtitle lines in the popup status.
+4. **Subtitles Rendered**: Your custom subtitles will immediately render at the bottom center of the video player.
+5. **Adjust Sync (If Subtitles Are Off)**:
+   - If subtitles appear **too late** relative to audio, click **`-0.1s`** or **`-1s`**.
+   - If subtitles appear **too early** relative to audio, click **`+0.1s`** or **`+1s`**.
+6. **Toggle Subtitles**: Click **Hide subtitles** whenever you want to hide the overlay temporarily.
 
 ---
 
-## 🔒 Privacy & Data Notice
+## 🔒 Privacy Notice
 
-- **No Personal Data**: This extension does not collect, record, transmit, or store any personal data, user credentials, browsing history, or analytics.
-- **Local File Processing**: Subtitle files are parsed strictly inside your browser instance and are never uploaded to any remote server.
+- **No Tracking**: SubFlix does not collect, track, or share any personal information, browsing history, or analytics.
+- **Local Parsing**: All subtitle files are parsed directly inside your browser memory and never leave your device.
 
 ---
 
-## ☕ Support the Project
+## ☕ Support the Developer
 
-If you find this extension helpful, consider supporting development!
+If SubFlix makes your anime and movie watching better, consider supporting development!
 
-[![Buy Me a Coffee / Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20me%20a%20coffee-ff5e5b?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/zandaadev)
+[![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20me%20a%20coffee-ff5e5b?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/zandaadev)
 
-Support link: [https://ko-fi.com/zandaadev](https://ko-fi.com/zandaadev)
+👉 [**https://ko-fi.com/zandaadev**](https://ko-fi.com/zandaadev)
 
 ---
 
 ## 📄 License
 
-Distributed under the MIT License. Feel free to modify and contribute!
+Distributed under the MIT License. Contributions and feedback are always welcome!

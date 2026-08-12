@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Netflix Custom Subs",
+  "name": "SubFlix - Netflix Custom Subtitles",
   "version": "0.1.0",
-  "description": "Load your own subtitle file (.srt/.vtt) and sync it over Netflix playback with a manual offset.",
+  "description": "Load your own subtitle file (.srt/.vtt) and sync it over Netflix playback with real-time manual offset control.",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Netflix Custom Subs"
+    "default_title": "SubFlix"
   },
   "permissions": ["activeTab", "scripting"],
   "host_permissions": ["*://*.netflix.com/*"],
