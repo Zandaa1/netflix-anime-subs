@@ -56,6 +56,14 @@ SubFlix can be installed in Chrome, Brave, Edge, or any Chromium-based browser:
 
 ---
 
+## ⚠️ Disclaimers & Credits
+
+- **User-Provided Subtitles**: SubFlix does **not** provide, host, stream, bundle, or distribute any subtitle files or video media. Users must supply their own legally acquired `.srt` or `.vtt` subtitle files.
+- **Anime & Media Creators**: Full credit and gratitude go to the original creators, production studios, animators, voice actors, and subtitle translators who create and localize anime and films.
+- **Trademark Notice**: SubFlix is an independent, non-commercial open-source project. It is not affiliated with, endorsed by, or sponsored by Netflix, Inc., or any anime production company or distributor. All trademarks and copyrighted content belong to their respective owners.
+
+---
+
 ## 🔒 Privacy Notice
 
 - **No Tracking**: SubFlix does not collect, track, or share any personal information, browsing history, or analytics.
