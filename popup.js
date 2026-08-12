@@ -3,7 +3,7 @@ const statusEl = document.getElementById('status');
 const offsetValueEl = document.getElementById('offsetValue');
 const toggleBtn = document.getElementById('toggleBtn');
 
-let currentOffset = 0.1;
+let currentOffset = 1.0;
 let subsHidden = false;
 
 function fmtOffset(v) {
@@ -131,10 +131,10 @@ fileInput.addEventListener('change', async (e) => {
     return;
   }
 
-  // Load subtitles and apply the default 0.1s offset immediately
+  // Load subtitles and apply the default 1.0s offset immediately
   const result = await sendToContent({ type: 'LOAD_SUBS', cues, filename: file.name });
   if (result && result.ok) {
-    currentOffset = 0.1;
+    currentOffset = 1.0;
     await sendToContent({ type: 'SET_OFFSET', offset: currentOffset });
     renderStatus(cues.length, file.name);
     offsetValueEl.textContent = fmtOffset(currentOffset);
@@ -159,12 +159,12 @@ toggleBtn.addEventListener('click', async () => {
   await sendToContent({ type: 'SET_VISIBILITY', hidden: subsHidden });
 });
 
-// On popup open, restore state or set default offset to 0.1s
+// On popup open, restore state or set default offset to 1.0s
 (async () => {
   offsetValueEl.textContent = fmtOffset(currentOffset);
   const state = await sendToContent({ type: 'GET_STATE' });
   if (state) {
-    currentOffset = typeof state.offset === 'number' ? state.offset : 0.1;
+    currentOffset = typeof state.offset === 'number' ? state.offset : 1.0;
     subsHidden = !!state.hidden;
     offsetValueEl.textContent = fmtOffset(currentOffset);
     toggleBtn.innerHTML = subsHidden
