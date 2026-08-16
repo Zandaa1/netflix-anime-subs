@@ -1,4 +1,4 @@
-# 🍿 SubFlix — Custom Subtitles for Netflix
+# SubFlix — Custom Subtitles for Netflix
 
 A lightweight, high-performance browser extension (Manifest V3) that enables custom subtitle overlays (`.srt` or `.vtt`) on Netflix video playback with sub-second real-time sync offset controls.
 
@@ -16,7 +16,6 @@ Created by [**Zandaa1**](https://github.com/Zandaa1).
 
 - **Custom Subtitle Files**: Seamlessly parse and load `.srt` and `.vtt` subtitle files directly into Netflix player.
 - **Real-Time Offset Sync**: Adjust subtitle timing on the fly (`-1s`, `-0.1s`, `+0.1s`, `+1s`) to eliminate audio/subtitle sync drift.
-- **Dynamic Layout Alignment**: Overlay automatically scales, centers, and anchors across fullscreen toggles and window resizes.
 - **Visibility Toggle**: Easily toggle subtitle overlay visibility (Show/Hide) without clearing loaded subtitle data.
 - **100% Private & Local**: Zero data collection, no external API dependencies, and 100% client-side execution.
 
